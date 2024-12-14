@@ -1,0 +1,67 @@
+ ArrayList<Integer> boundaryTraversal(Node node) {
+        Node root = node;
+        ArrayList<Integer> list = new ArrayList<>();
+        if(node == null)
+        return list;
+        if(root != null && root.right == null && root.left == null)
+        {
+            list.add(root.data);
+            return list;
+        }
+        list.add(node.data);
+        leftboundary(node,node,list);
+        inorder(node,node,list);
+        rightboundary(node,node,list);
+        return list;
+    } 
+
+/* The left boundary is traversed first and original is to avoid adding the root value again in the resultant list because that value is already added./*
+
+    public static void leftboundary(Node root,Node original,ArrayList<Integer> list){
+        if(root != null && root.left == null && root.right == null)
+        return;
+        if(root != null && root.left == null  && root == original)
+        return;
+        if(root != null && root.left != null)
+        {
+            if(root != original)
+            list.add(root.data);
+            leftboundary(root.left,original,list);
+        }
+        else if(root != null && root.right != null){
+            if(root != original)
+            list.add(root.data);
+            leftboundary(root.right,original,list);
+        }
+    }
+
+/* to traverse the leaf nodes
+
+    public static void inorder(Node root,Node original,ArrayList<Integer> list){
+        if(root != null && root.left == null && root.right == null){
+        list.add(root.data);
+        return;
+        }
+        if(root != null){
+        inorder(root.left,original,list);
+        inorder(root.right,original,list);
+        }
+    }
+/* same as of the left boundary here instead left first we are traversing through the right of the root
+    public static void rightboundary(Node root,Node original,ArrayList<Integer>list){
+        if(root != null && root.left == null && root.right == null)
+        return;
+        if(root != null && root == original && root.right == null)
+        return;
+        if(root != null && root.right != null)
+        {
+            rightboundary(root.right,original,list);
+            if(root != original)
+            list.add(root.data);
+        }
+        else if(root != null && root.left != null){
+            rightboundary(root.left,original,list);
+            if(root != original)
+            list.add(root.data);
+        }
+    }
